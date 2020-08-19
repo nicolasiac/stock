@@ -12,7 +12,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/users")
+    fetch("/api/users")
       .then(res => res.json())
       .then(
         (result) => {
