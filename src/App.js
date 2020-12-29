@@ -64,10 +64,10 @@ class App extends React.Component {
           <ul>
             {items.map(item => (
               <li key={item.transactionid}>
-                #{item.stockid} {item.name} {item.date} {item.price} {item.shares}{item.transactionid}
-                <a href="#" onClick={e => this._itemAdd(item)}>add</a>&nbsp;
-                <a href="#" onClick={e => this._itemSelected(item)}>edit</a>&nbsp;
-                <a href="#" onClick={e => this._itemDelete(item)}>delete</a>
+                #{item.stockid} {item.name} {item.date} {item.price} {item.shares} {item.transactionid}&nbsp;
+                <button onClick={e => this._itemAdd(item)}>add</button> 
+                <button onClick={e => this._itemSelected(item)}>edit</button>
+                <button onClick={e => this._itemDelete(item)}>delete</button>
               </li>
             ))}
           </ul>
