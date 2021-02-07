@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const puppeteer = require('puppeteer');
 
 var connectionPool = require('../database');
 
@@ -39,5 +40,34 @@ router.delete('/', function (req, res, next) {
     });
 });
 
+router.get('/fetch', async (req, res, next) => {
+
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.setViewport({ height: 768, width: 1024 });
+    await page.goto('https://finance.yahoo.com/quote/MSFT');
+
+
+    await page.click('.primary');
+
+    await page.waitForNavigation({ waitUntil: 'networkidle0' });
+
+    const element = await page.$$eval('span',
+        anchors => {
+            return anchors
+                .filter(anchor => anchor.getAttribute('data-reactid') === '32')
+                .map(anchor =>
+                    anchor.textContent
+                )
+                .slice(0, 1)
+        });
+
+
+    console.log(element);
+
+    await browser.close();
+
+    res.send(element);
+});
 
 module.exports = router;
